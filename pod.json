@@ -1,0 +1,23 @@
+{
+  "kind": "Pod",
+  "apiVersion":"v1",
+
+  "metadata": {
+  	"name": "tls-server",
+  	"labels": {
+    		"name": "tls-server"
+  	}
+  },
+
+  "spec": {
+      "containers": [{
+        "name": "tls-server",
+        "image": "172.30.22.134:5000/sni/tls-server",
+        "ports": [
+          {
+            "containerPort": 9999
+          }
+        ]
+      }]
+  }
+}

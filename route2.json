@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: sni-route 
+spec:
+  host: sni.apps.josborne.com
+  to:
+    kind: Service
+    name: tls-service 
+  tls:
+    termination: passthrough
