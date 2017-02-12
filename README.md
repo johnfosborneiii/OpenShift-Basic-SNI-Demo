@@ -6,7 +6,7 @@ Demonstrates a TLS tcp client connecting through the OpenShift router to a TLS t
 1.  Start OpenShift
 1.  Install the router
 1.  Create the pod, service, and route
-1.  Run the client
+1.  Run the client and pass in route as a parameter(ie, go run client.go sni.service.com)
 
 If you're not using the single machine vagrant environment you may need to adjust the ip address in the client.  The client
 points to 10.0.2.15 which is the default ip for the vagrant machine and is also the entry point for the router since the
@@ -24,7 +24,7 @@ tls-service         <none>                                    name=tls-server   
 NAME                HOST/PORT           PATH                SERVICE             LABELS
 route-passthrough   my-tls-server                           tls-service   
 
-[vagrant@openshiftdev paul_temp]$ go run client.go 
+[vagrant@openshiftdev paul_temp]$ go run client.go
 Hello TLS
 [vagrant@openshiftdev paul_temp]$
 ```
