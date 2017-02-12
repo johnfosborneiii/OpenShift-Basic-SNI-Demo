@@ -24,7 +24,7 @@ tls-service         <none>                                    name=tls-server   
 NAME                HOST/PORT           PATH                SERVICE             LABELS
 route-passthrough   my-tls-server                           tls-service   
 
-[vagrant@openshiftdev paul_temp]$ go run client.go
+[vagrant@openshiftdev paul_temp]$ go run client.go tls-service.route.ocpmaster.com
 Hello TLS
 [vagrant@openshiftdev paul_temp]$
 ```
