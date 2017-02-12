@@ -5,7 +5,7 @@ Demonstrates a TLS tcp client connecting through the OpenShift router to a TLS t
 1.  Build the docker image with `build.sh`
 1.  Start OpenShift
 1.  Install the router
-1.  Create the pod, service, and route
+1.  Create a new app from the template
 1.  Run the client and pass in route as a parameter(ie, ***go run client.go sni.service.com***)
 
 If you're not using the single machine vagrant environment you may need to adjust the ip address in the client.  The client
@@ -13,7 +13,8 @@ points to 10.0.2.15 which is the default ip for the vagrant machine and is also 
 router binds to host ports.
 
 ```
-[vagrant@openshiftdev paul_temp]$ osc get pods && osc get services && osc get routes
+[vagrant@openshiftdev paul_temp]$ oc new-app -f snidemo-template.json 
+[vagrant@openshiftdev paul_temp]$ oc get pods && oc get services && oc get routes
 POD                 IP                  CONTAINER(S)                   IMAGE(S)                          HOST                           LABELS              STATUS
 router              172.17.0.2          origin-haproxy-router-router   openshift/origin-haproxy-router   openshiftdev.local/127.0.0.1   <none>              Running
 tls-server          172.17.0.4          tls-server                     pweil/tls-server                  openshiftdev.local/127.0.0.1   name=tls-server     Running
