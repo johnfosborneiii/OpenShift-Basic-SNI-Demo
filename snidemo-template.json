@@ -1,0 +1,93 @@
+{
+  "kind": "Template",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "snidemo"
+  },
+  "objects": [
+    {
+      "kind": "Route",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "sni-route",
+        "labels": {
+          "app": "snidemo"
+        },
+        "annotations": {
+          "openshift.io/host.generated": "true"
+        }
+      },
+      "spec": {
+        "to": {
+          "kind": "Service",
+          "name": "tls-service",
+          "weight": 100
+        },
+        "tls": {
+          "termination": "passthrough"
+        },
+        "wildcardPolicy": "None"
+      }
+    },
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "tls-service",
+        "labels": {
+          "app": "snidemo"
+        }
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "sni",
+            "protocol": "TCP",
+            "port": 2999,
+            "targetPort": 9999
+          }
+        ],
+        "selector": {
+          "name": "tls-server"
+        },
+        "type": "ClusterIP",
+        "sessionAffinity": "None"
+      }
+    },
+    {
+      "kind": "Pod",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "tls-server",
+        "labels": {
+          "app": "snidemo",
+          "name": "tls-server"
+        },
+        "annotations": {
+          "openshift.io/scc": "restricted"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "tls-server",
+            "image": "brandoncox/tls-server",
+            "args": [
+              "/usr/sbin/server",
+              "-msg=test2"
+            ],
+            "ports": [
+              {
+                "containerPort": 9999,
+                "protocol": "TCP"
+              }
+            ],
+            "imagePullPolicy": "Always"
+          }
+        ],
+        "restartPolicy": "Always",
+        "dnsPolicy": "ClusterFirst"
+      }
+    }
+  ]
+}

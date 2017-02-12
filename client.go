@@ -9,11 +9,12 @@ import (
 )
 
 func main() {
-	server := flag.String("server", "sni.apps.josborne.com:443", "the server and port to connect to in the form of 10.0.2.15:443")
+	hostname := os.Args[1] // add some error checking
+	server := flag.String("server", hostname + ":443", "the server and port to connect to in the form of 10.0.2.15:443")
 	flag.Parse()
 
 	config := &tls.Config{
-		ServerName:         "sni.apps.josborne.com",
+		ServerName:         hostname,
 		InsecureSkipVerify: true,
 	}
 
